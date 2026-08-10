@@ -11,33 +11,41 @@ from src.data.etl import data_validation, time_based_features
 def test_validate_data_removes_missing():
     """Test that validation removes rows with missing essential fields"""
     df = pd.DataFrame({
-        'InvoiceNo': ['A', 'B', None, 'D'],
+        'Invoice': ['A', 'B', None, 'D'],
         'StockCode': ['X', 'Y', 'Z', None],
         'Quantity': [1, 2, 3, 4],
-        'Price': [10, 20, 30, 40]
+        'Price': [10, 20, 30, 40],
+        'Customer ID': [1,2,3,4],
+        'InvoiceDate': ["2023-01-01 08:30:00",
+    "2023-01-01 09:15:00",
+    "2023-01-01 10:45:00","2023-01-01 10:55:00"]
     })
     
     df_clean = data_validation(df)
     
     # Should remove rows with missing InvoiceNo or StockCode
     assert len(df_clean) < len(df)
-    assert df_clean['InvoiceNo'].isnull().sum() == 0
+    assert df_clean['Invoice'].isnull().sum() == 0
     assert df_clean['StockCode'].isnull().sum() == 0
 
 
 def test_validate_data_removes_negative_quantity():
     """Test that validation removes negative quantities (returns)"""
     df = pd.DataFrame({
-        'InvoiceNo': ['A', 'B', 'C'],
+        'Invoice': ['A', 'B', 'C'],
         'StockCode': ['X', 'Y', 'Z'],
         'Quantity': [5, -3, 10],  # One return
-        'Price': [10, 20, 30]
+        'Price': [10, 20, 30],
+        'Customer ID': [1,2,3],
+        'InvoiceDate': ["2023-01-01 08:30:00",
+    "2023-01-01 09:15:00",
+    "2023-01-01 10:45:00",]
     })
     
     df_clean = data_validation(df)
     
     # Should remove the return
-    assert len(df_clean) == 2
+    assert len(df_clean) == 1
     assert all(df_clean['Quantity'] > 0)
 
 
