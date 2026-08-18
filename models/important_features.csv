@@ -1,0 +1,17 @@
+features,importance
+lag_1,0.052119292
+lag_7,0.036455724
+lag_14,0.027182661
+lag_28,0.056797516
+rolling_mean_7,0.03695852
+rolling_mean_14,0.07415012
+rolling_std_7,0.0514708
+rolling_max_7,0.045849208
+day_of_week,0.052312806
+day_of_month,0.060758147
+month,0.15563253
+week_of_year,0.106266044
+quarter,0.13279672
+is_weekend,0.0128697045
+price,0.04215621
+average_price_7,0.05622402

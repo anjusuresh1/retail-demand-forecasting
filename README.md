@@ -60,3 +60,71 @@ python etl.py
 import pandas as pd
 df = pd.read_parquet('../data/processed/sales_daily.parquet')
 print(df.head())
+
+## Day 2 Baseline Results
+
+The validation set contains the final 28 days of the dataset. 
+The split is chronological to prevent future information from entering training.
+
+          model       MAE       RMSE       MAPE       WAPE
+    NaiveWeekly 28.528971 128.780580 337.720462 116.230201
+RidgeRegression 21.494573  61.470774 356.981352  89.949986
+        XGBoost 22.096281  83.882901 290.281295  92.467998
+
+The selected model for the next stage will be based on validation performance,
+business interpretability, inference speed, and operational complexity.
+
+## Day 3: Advanced Modeling
+
+### Models Evaluated
+
+The following XGBoost configurations were evaluated:
+
+- Baseline XGBoost
+- Regularized XGBoost
+- Shallow XGBoost
+
+The validation set contained the final 28 days of observations. A chronological split was used to avoid future-data leakage.
+
+### Experiment Tracking
+
+MLflow recorded:
+
+- Hyperparameters
+- MAE
+- RMSE
+- MAPE
+- WAPE
+- Trained model artifacts
+
+Run the MLflow UI with:
+
+```bash
+python -m mlflow ui
+```
+
+### Model Artifacts
+
+The selected model is saved to:
+
+```text
+models/tuned_xgboost.joblib
+```
+
+Feature importance is saved to:
+
+```text
+models/feature_importance.csv
+models/feature_importance.png
+```
+
+### Model Selection
+
+The final model was selected using validation WAPE, while also considering inference speed, interpretability, and deployment complexity.
+
+Actual validation metrics are reported below:
+
+         model       MAE      RMSE       MAPE       WAPE
+xg_regularized 18.102295 73.699718 310.231954  88.062210
+   xg_baseline 18.549111 70.608182 319.412183  90.235837
+    xg_shallow 21.245170 77.234983 408.358883 103.351348
