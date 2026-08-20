@@ -128,3 +128,33 @@ Actual validation metrics are reported below:
 xg_regularized 18.102295 73.699718 310.231954  88.062210
    xg_baseline 18.549111 70.608182 319.412183  90.235837
     xg_shallow 21.245170 77.234983 408.358883 103.351348
+
+## Day 4: Price Elasticity and Optimization
+
+### Objective
+
+Estimate product-level price elasticity and recommend prices that maximize expected gross profit.
+
+### Method
+
+1. Estimate elasticity using a log-log regression:
+   
+   `log(demand) = intercept + elasticity * log(price)`
+
+2. Use the Day 3 demand model to estimate base demand.
+3. Generate candidate prices within a ±20% range.
+4. Enforce minimum price, maximum price, and minimum margin constraints.
+5. Adjust demand using the estimated elasticity.
+6. Select the candidate price with maximum expected profit.
+
+### Assumptions
+
+- Unit cost is estimated as 60% of current price because actual cost data is unavailable.
+- Missing or unreliable product elasticity uses a fallback value of -1.0.
+- Historical price-demand relationships are observational and not necessarily causal.
+- Stockout effects are not explicitly modeled.
+
+### Outputs
+
+- `data/processed/elasticity_estimates.csv`
+- `data/processed/pricing_recommendations.csv`
