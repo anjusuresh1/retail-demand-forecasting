@@ -1,0 +1,11 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: retail-demand-api:day6
+    container_name: retail-demand-api-container
+    ports:
+      - "8000:8080"
+    environment:
+      PORT: "8080"

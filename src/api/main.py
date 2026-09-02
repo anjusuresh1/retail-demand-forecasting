@@ -9,6 +9,7 @@ from src.api.schemas import (
 )
 from src.api.services import (
     MODEL_VERSION,
+    is_model_loaded,
     generate_price_recommendation,
     load_model,
     predict_demand,
@@ -29,6 +30,7 @@ def start_event():
 def health():
     return {
         'status': 'ok',
+        'model_loaded': is_model_loaded(),
         'version': MODEL_VERSION
     }
     

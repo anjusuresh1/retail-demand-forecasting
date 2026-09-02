@@ -104,3 +104,5 @@ def generate_price_recommendation(
         constraints=constraints,
     )
     
+def is_model_loaded() -> bool:
+    return _model is not None
